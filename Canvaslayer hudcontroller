@@ -1,0 +1,22 @@
+extends CanvasLayer
+
+func _ready():
+	ScoreManager.connect("score_changed", _on_score_changed)
+	ScoreManager.connect("lives_changed", _on_lives_changed)
+	ScoreManager.connect("game_over", _on_game_over)
+	$ScoreLabel.text = "Score: 0"
+	$LivesLabel.text = "Lives: 3"
+	$GameOverPanel.hide()
+
+func _on_score_changed(new_score):
+	$ScoreLabel.text = "Score: " + str(new_score)
+
+func _on_lives_changed(new_lives):
+	$LivesLabel.text = "Lives: " + str(new_lives)
+
+func _on_game_over():
+	$GameOverPanel.show()
+
+func _on_RestartButton_pressed():
+	ScoreManager.reset()
+	get_tree().reload_current_scene()
